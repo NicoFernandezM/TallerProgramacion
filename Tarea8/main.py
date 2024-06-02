@@ -51,6 +51,10 @@ def show_game(game):
         print(f"{GAME_FIELDS[field]}: {game[field]}")
 
 def update_game(games):
+    if not games:
+        print("Empty collection.")
+        return
+    
     show_games(games)
     print("¿Which game do you want to update?")
 
@@ -59,6 +63,10 @@ def update_game(games):
     games[game_number] = updated_game
 
 def delete_game(games):
+    if not games:
+        print("Empty collection.")
+        return
+    
     show_games(games)
     print("¿Which game do you want to delete?")
 
@@ -66,6 +74,10 @@ def delete_game(games):
     games.pop(game_number)
 
 def search_game(games):
+    if not games:
+        print("Empty collection.")
+        return
+    
     show_fields()
     print("Select a field to search by.")
     field_number = select_option(GAME_FIELDS) - 1
@@ -90,10 +102,15 @@ def show_fields():
 
 def select_option(option_list):
     while True:
-        option = int(input("Select an option. "))
+        try:
+            option = int(input("Select an option. "))
+        except:
+            print("You must select a number")
+            continue
+        
         if option <= len(option_list) and option > 0:
             return option
-        print(f"You must select a number between {len(option_list)} and 1.")
+        print(f"You must select a number between 1 and {len(option_list)}.")
 
 def menu():
     games = []
@@ -103,19 +120,19 @@ def menu():
 
     while True:
         print("1) Add videogame.\n2) Show videogames.\n3) Update videogame.\n4) Delete videogame.\n5) Search videogame.\n6) Exit.\n")
-        option = int(input("Enter an option."))
+        option = input("Enter an option.")
 
-        if option == 1:
+        if option == "1":
             add_game(games)
-        elif option == 2:
+        elif option == "2":
             show_games(games)
-        elif option == 3:
+        elif option == "3":
             update_game(games)
-        elif option == 4:
+        elif option == "4":
             delete_game(games)
-        elif option == 5:
+        elif option == "5":
             search_game(games)
-        elif option == 6:
+        elif option == "6":
             break
         else:
             print("You must select a number between 1 and 6.")
